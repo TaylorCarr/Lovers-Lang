@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE2D0F2B2AF7B19A0086BE58 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2D0F2A2AF7B19A0086BE58 /* Login.swift */; };
 		CED93A732AF770EC007B2187 /* Lovers_LangApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED93A722AF770EC007B2187 /* Lovers_LangApp.swift */; };
 		CED93A752AF770EC007B2187 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED93A742AF770EC007B2187 /* ContentView.swift */; };
-		CED93A772AF770EC007B2187 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED93A762AF770EC007B2187 /* Item.swift */; };
 		CED93A792AF770EF007B2187 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CED93A782AF770EF007B2187 /* Assets.xcassets */; };
 		CED93A7C2AF770EF007B2187 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CED93A7B2AF770EF007B2187 /* Preview Assets.xcassets */; };
 		CED93A882AF770F0007B2187 /* Lovers_LangTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED93A872AF770F0007B2187 /* Lovers_LangTests.swift */; };
@@ -35,10 +35,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CE2D0F2A2AF7B19A0086BE58 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		CED93A6F2AF770EC007B2187 /* Lovers Lang.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lovers Lang.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CED93A722AF770EC007B2187 /* Lovers_LangApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lovers_LangApp.swift; sourceTree = "<group>"; };
 		CED93A742AF770EC007B2187 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		CED93A762AF770EC007B2187 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		CED93A782AF770EF007B2187 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CED93A7B2AF770EF007B2187 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CED93A7D2AF770EF007B2187 /* Lovers_Lang.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Lovers_Lang.entitlements; sourceTree = "<group>"; };
@@ -100,7 +100,7 @@
 			children = (
 				CED93A722AF770EC007B2187 /* Lovers_LangApp.swift */,
 				CED93A742AF770EC007B2187 /* ContentView.swift */,
-				CED93A762AF770EC007B2187 /* Item.swift */,
+				CE2D0F2A2AF7B19A0086BE58 /* Login.swift */,
 				CED93A782AF770EF007B2187 /* Assets.xcassets */,
 				CED93A7D2AF770EF007B2187 /* Lovers_Lang.entitlements */,
 				CED93A7E2AF770EF007B2187 /* Info.plist */,
@@ -265,8 +265,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CED93A752AF770EC007B2187 /* ContentView.swift in Sources */,
-				CED93A772AF770EC007B2187 /* Item.swift in Sources */,
 				CED93A732AF770EC007B2187 /* Lovers_LangApp.swift in Sources */,
+				CE2D0F2B2AF7B19A0086BE58 /* Login.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
