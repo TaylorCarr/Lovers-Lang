@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE2557182B44A4CE00772ED3 /* LoveLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2557172B44A4CE00772ED3 /* LoveLanguageView.swift */; };
+		CE25571A2B44A51300772ED3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2557192B44A51300772ED3 /* SettingsView.swift */; };
 		CE2D0F2B2AF7B19A0086BE58 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2D0F2A2AF7B19A0086BE58 /* Login.swift */; };
 		CE9518622B3EB3000026D165 /* Lovers_LangTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED93A872AF770F0007B2187 /* Lovers_LangTests.swift */; };
 		CE9518632B3EB30F0026D165 /* Lovers_LangUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED93A912AF770F0007B2187 /* Lovers_LangUITests.swift */; };
@@ -37,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CE2557172B44A4CE00772ED3 /* LoveLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoveLanguageView.swift; sourceTree = "<group>"; };
+		CE2557192B44A51300772ED3 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		CE2D0F2A2AF7B19A0086BE58 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		CE3495E72B3EACA70049900B /* Lovers LangUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Lovers LangUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE3495F62B3EACD10049900B /* Lovers LangTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Lovers LangTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,6 +109,8 @@
 			children = (
 				CED93A722AF770EC007B2187 /* Lovers_LangApp.swift */,
 				CED93A742AF770EC007B2187 /* ContentView.swift */,
+				CE2557192B44A51300772ED3 /* SettingsView.swift */,
+				CE2557172B44A4CE00772ED3 /* LoveLanguageView.swift */,
 				CE2D0F2A2AF7B19A0086BE58 /* Login.swift */,
 				CED93A782AF770EF007B2187 /* Assets.xcassets */,
 				CED93A7D2AF770EF007B2187 /* Lovers_Lang.entitlements */,
@@ -289,8 +295,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE25571A2B44A51300772ED3 /* SettingsView.swift in Sources */,
 				CED93A752AF770EC007B2187 /* ContentView.swift in Sources */,
 				CED93A732AF770EC007B2187 /* Lovers_LangApp.swift in Sources */,
+				CE2557182B44A4CE00772ED3 /* LoveLanguageView.swift in Sources */,
 				CE9518662B425B8B0026D165 /* SplashView.swift in Sources */,
 				CE2D0F2B2AF7B19A0086BE58 /* Login.swift in Sources */,
 				CEB6E8D72AFAE60400A905C4 /* LoveLanguageQuizView.swift in Sources */,
@@ -513,6 +521,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = "Lovers Lang/Lovers_Lang.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Lovers Lang/Preview Content\"";
@@ -532,9 +541,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.carrcodes.Lovers-Lang";
+				MARKETING_VERSION = 1.0.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.carrcodes.LoversLang;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -551,6 +561,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = "Lovers Lang/Lovers_Lang.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Lovers Lang/Preview Content\"";
@@ -570,9 +581,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.carrcodes.Lovers-Lang";
+				MARKETING_VERSION = 1.0.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.carrcodes.LoversLang;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
