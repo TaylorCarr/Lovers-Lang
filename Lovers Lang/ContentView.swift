@@ -67,7 +67,6 @@ struct ContentView: View {
 
 struct LoveLanguageView: View {
     @State private var isShowingQuiz = false
-//    @State var usersLoveLanguages = QuizScore().fetchUserData()
     @State var favoriteLanguage: languages?
     @State var favoritePercentage: Float?
     @ObservedObject var userInfo: UserInfo
@@ -116,16 +115,16 @@ struct LoveLanguageView: View {
                         Text(languages.wordsOfAffirmation.name).frame(width: 200, alignment: .leading)
                         LoveLanguageBar(loveLanguage: languages.wordsOfAffirmation, score: userInfo.QuizScore.wordsOfAffirmation).frame(width: const.LOVE_LANG_BAR_WIDTH, alignment: .leading)
                     }
-                    Text(verbatim: "Based on your test results, your most preferred love language is \(favoriteLanguage?.name ?? "unknown") with a percentage of \(favoritePercentage ?? Float(0))%")
-                    Text("")
+                    Text(verbatim: "Based on your test results, your most preferred love language is \(favoriteLanguage?.name ?? "unknown") with a percentage of \(favoritePercentage ?? Float(0))%").frame(width: Constants().SCREEN_WIDTH * 0.8, height: Constants().SCREEN_HEIGHT * 0.2).accessibilityIdentifier("userSummary")
                 }.padding().accessibilityIdentifier("languagesChart")
             }
         }.onAppear{
+            print("userInfo.QuizScore: \(userInfo.QuizScore)")
             if let _ = userInfo.QuizScore.favoriteLanguage {
                 let temp = userInfo.QuizScore.fetchFavorite(userInfo: userInfo)
                 favoriteLanguage = temp.favoriteLanguage
                 favoritePercentage = temp.favoritePercentage
-                favoritePercentage = round(favoritePercentage! * 100) / 100
+                favoritePercentage = round(favoritePercentage! * 100)
             }
         }
     }

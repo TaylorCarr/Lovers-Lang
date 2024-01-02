@@ -27,7 +27,7 @@ final class Lovers_LangUITests: XCTestCase {
         app.launchArguments = ["-StartFromCleanState", "YES"]
         app.launch()
         
-        let langChart = app.otherElements["languagesChart"]
+        let langChart = app.otherElements["userSummary"]
 
         if(app.buttons["takeQuizButton"].isHittable) {
             app.buttons["takeQuizButton"].tap()
@@ -47,7 +47,7 @@ final class Lovers_LangUITests: XCTestCase {
         app.launch()
         app.launchArguments = ["-StartFromCleanState", "YES"]
         
-        let langChart = app.otherElements["languagesChart"]
+        let langChart = app.otherElements["userSummary"]
 
         if(app.buttons["takeQuizButton"].isHittable) {
             app.buttons["takeQuizButton"].tap()

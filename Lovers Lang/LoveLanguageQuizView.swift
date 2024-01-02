@@ -203,41 +203,52 @@ struct QuizScore: Codable {
     }
     
     func fetchFavorite(userInfo: UserInfo) -> favoriteStruct {
-        let words = userInfo.QuizScore.wordsOfAffirmation
-        let gifts = userInfo.QuizScore.receivingGifts
-        let acts = userInfo.QuizScore.actsOfService
-        let time = userInfo.QuizScore.qualityTime
-        let touch = userInfo.QuizScore.physicalTouch
+        let words = Float(userInfo.QuizScore.wordsOfAffirmation)
+        let gifts = Float(userInfo.QuizScore.receivingGifts)
+        let acts = Float(userInfo.QuizScore.actsOfService)
+        let time = Float(userInfo.QuizScore.qualityTime)
+        let touch = Float(userInfo.QuizScore.physicalTouch)
         
-        var percentage = Float(words/languages.wordsOfAffirmation.maxCount)
+        print(words)
+        print(gifts)
+        print(acts)
+        print(time)
+        print(touch)
+        
+        var percentage = words/Float(languages.wordsOfAffirmation.maxCount)
+        print(words/Float(languages.wordsOfAffirmation.maxCount))
+        print(gifts/Float(languages.receivingGifts.maxCount))
+        print(acts/Float(languages.actsOfService.maxCount))
+        print(time/Float(languages.qualityTime.maxCount))
+        print(touch/Float(languages.physicalTouch.maxCount))
         var language = languages.wordsOfAffirmation
         var score = words
         
-        if(percentage < Float(gifts/languages.wordsOfAffirmation.maxCount)) {
-            percentage = Float(gifts/languages.wordsOfAffirmation.maxCount)
+        if(percentage < gifts/Float(languages.receivingGifts.maxCount)) {
+            percentage = gifts/Float(languages.receivingGifts.maxCount)
             language = languages.receivingGifts
             score = gifts
         }
         
-        if(percentage < Float(acts/languages.actsOfService.maxCount)) {
-            percentage = Float(acts/languages.actsOfService.maxCount)
+        if(percentage < acts/Float(languages.actsOfService.maxCount)) {
+            percentage = acts/Float(languages.actsOfService.maxCount)
             language = languages.actsOfService
             score = acts
         }
         
-        if(percentage < Float(time/languages.qualityTime.maxCount)) {
-            percentage = Float(time/languages.qualityTime.maxCount)
+        if(percentage < time/Float(languages.qualityTime.maxCount)) {
+            percentage = time/Float(languages.qualityTime.maxCount)
             language = languages.qualityTime
             score = time
         }
         
-        if(percentage < Float(touch/languages.physicalTouch.maxCount)) {
-            percentage = Float(touch/languages.physicalTouch.maxCount)
+        if(percentage < touch/Float(languages.physicalTouch.maxCount)) {
+            percentage = touch/Float(languages.physicalTouch.maxCount)
             language = languages.physicalTouch
             score = touch
         }
         
-        return favoriteStruct(favoriteLanguage: language, favoriteScore: score, favoritePercentage: percentage)
+        return favoriteStruct(favoriteLanguage: language, favoriteScore: Int(score), favoritePercentage: percentage)
     }
 }
 
