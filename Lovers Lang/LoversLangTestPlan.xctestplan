@@ -1,0 +1,35 @@
+{
+  "configurations" : [
+    {
+      "id" : "B0774F56-3F88-4968-965C-B6018B796EFC",
+      "name" : "Configuration 1",
+      "options" : {
+        "targetForVariableExpansion" : {
+          "containerPath" : "container:Lovers Lang.xcodeproj",
+          "identifier" : "CE3495E62B3EACA70049900B",
+          "name" : "Lovers LangUITests"
+        }
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Lovers Lang.xcodeproj",
+        "identifier" : "CE3495E62B3EACA70049900B",
+        "name" : "Lovers LangUITests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Lovers Lang.xcodeproj",
+        "identifier" : "CE3495F52B3EACD10049900B",
+        "name" : "Lovers LangTests"
+      }
+    }
+  ],
+  "version" : 1
+}

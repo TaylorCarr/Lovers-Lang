@@ -2,7 +2,7 @@
 //  Lovers_LangUITests.swift
 //  Lovers LangUITests
 //
-//  Created by Taylor Carr on 11/4/23.
+//  Created by Taylor Carr on 12/28/23.
 //
 
 import XCTest
@@ -23,11 +23,41 @@ final class Lovers_LangUITests: XCTestCase {
     }
 
     func testExample() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-StartFromCleanState", "YES"]
+        app.launch()
+        
+        let langChart = app.otherElements["languagesChart"]
+
+        if(app.buttons["takeQuizButton"].isHittable) {
+            app.buttons["takeQuizButton"].tap()
+            for _ in 0..<30 {
+                app.buttons["buttonA"].tap()
+                app.buttons["submit"].tap()
+            }
+            XCTAssert(langChart.exists)
+        } else {
+            XCTAssert(langChart.exists)
+        }
+    }
+
+    func cleanSlate() throws {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
         app.launch()
+        app.launchArguments = ["-StartFromCleanState", "YES"]
+        
+        let langChart = app.otherElements["languagesChart"]
 
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        if(app.buttons["takeQuizButton"].isHittable) {
+            app.buttons["takeQuizButton"].tap()
+            for _ in 0..<30 {
+                app.buttons["buttonA"].tap()
+                app.buttons["submit"].tap()
+            }
+        } else {
+            XCTAssert(langChart.exists)
+        }
     }
 
     func testLaunchPerformance() throws {

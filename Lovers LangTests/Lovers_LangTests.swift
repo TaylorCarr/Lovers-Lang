@@ -2,11 +2,10 @@
 //  Lovers_LangTests.swift
 //  Lovers LangTests
 //
-//  Created by Taylor Carr on 11/4/23.
+//  Created by Taylor Carr on 12/28/23.
 //
 
 import XCTest
-@testable import Lovers_Lang
 
 final class Lovers_LangTests: XCTestCase {
 
@@ -28,7 +27,7 @@ final class Lovers_LangTests: XCTestCase {
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
-        self.measure {
+        measure {
             // Put the code you want to measure the time of here.
         }
     }

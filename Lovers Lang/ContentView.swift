@@ -11,89 +11,174 @@ import WebKit
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    
+    let userInfo = UserInfo()
+    @State var half = false
+    @State var doneLoading = false
     let navBarColor = Color(uiColor: UIColor(red: 230, green: 230, blue: 250, alpha: 0.5))
+    
+    var repeatingAnimation: Animation {
+        Animation
+            .easeInOut(duration: 1)
+            .repeatCount(8)
+    }
 
     var body: some View {
         NavigationView {
-            TabView {
-                MemoriesView()
-                    .tabItem {
-                        Text("Memories")
-                        Image("Photos").resizable()
-                    }
-                ReasonsView()
-                    .tabItem {
-                        Text("Reasons")
-                        Image("Reasons").resizable()
-                    }
-                MusicView()
-                    .tabItem {
-                        Text("Music")
-                        Image("Music").resizable()
-                    }
-            }.navigationBarTitle("ODE TO CHY", displayMode: .inline).frame(alignment: .center).toolbarBackground(.visible, for: .navigationBar).toolbarBackground(navBarColor, for: .navigationBar)
-        }
-        
-    }
-}
-
-struct MemoriesView: View {
-
-    var body: some View {
-        ScrollView {
-            VStack {
-                ForEach(0..<17) { index in
-                    Image("\(index)").resizable().aspectRatio(contentMode: .fit)
+            if (doneLoading == false) {
+                Image(uiImage: UIImage(named: "AppIcon")!)
+                    .resizable()
+                    .scaleEffect(half ? 1.5 : 1.0)
+                    .frame(width: 250, height: 250, alignment: .center)
+                
+                    .onAppear(perform: {
+                        withAnimation(self.repeatingAnimation) {
+                            self.half.toggle()
+                            self.doneLoading = false
+                            print("added")
+                        }
+                    })
+            } else {
+                TabView {
+                    LoveLanguageView(userInfo: userInfo)
+                        .tabItem {
+                            Text("Language")
+                            Image("romance").resizable()
+                        }
+                    SettingsView()
+                        .tabItem {
+                            Text("Settings")
+                            Image("settings").resizable()
+                        }
+                }
+                .navigationBarTitle("Lovers Lang", displayMode: .inline)
+                .frame(alignment: .center)
+                .toolbarBackground(.visible, for: .navigationBar)
+                .toolbarBackground(navBarColor, for: .navigationBar)
+            }
+        }.onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                withAnimation{
+                    self.doneLoading = true
                 }
             }
         }
-        
     }
 }
 
-struct MusicView: View {
-    var body: some View {
-        VStack {
-            WebView(url: URL(string:"https://music.apple.com/us/playlist/ode-to-chynna/pl.u-BqZbH39GD5E")!)
-        }
-    }
-    
-    struct WebView: UIViewRepresentable {
-        // 1
-        let url: URL
-
-        
-        // 2
-        func makeUIView(context: Context) -> WKWebView {
-
-            return WKWebView()
-        }
-        
-        // 3
-        func updateUIView(_ webView: WKWebView, context: Context) {
-
-            let request = URLRequest(url: url)
-            webView.load(request)
-        }
-    }
-}
-
-struct ReasonsView: View {
-    var reasonsArray = ["You are the most intelligent woman I've ever met", "Your work ethic is unmatched", "You have a kind heart", "You're the most beautiful woman in the world", "You make me laugh", "You teach me things", "You give the most comforting hugs. When you hold me it makes me feel like everything is going to be alright", "Your pretty brown eyes"]
+struct LoveLanguageView: View {
+    @State private var isShowingQuiz = false
+//    @State var usersLoveLanguages = QuizScore().fetchUserData()
+    @State var favoriteLanguage: languages?
+    @State var favoritePercentage: Float?
+    @ObservedObject var userInfo: UserInfo
+    let const = Constants()
     
     var body: some View {
-        NavigationView {
-            VStack {
-                List {
-                    ForEach(0..<reasonsArray.count) { index in
-                        Text(reasonsArray[index])
+        NavigationStack {
+            if userInfo.QuizScore.favoriteLanguage == nil {
+                VStack {
+                    Text("It looks like you haven't taken the Love Language Quiz yet. Take it now to find out your Love Language!").padding().frame(width: const.SCREEN_WIDTH * 0.9, alignment: .center)
+                    Button(action: {
+                        isShowingQuiz.toggle()
+                    }, label: {
+                        Text("Take Quiz")
+                    })
+                    .padding()
+                    .frame(width: const.SCREEN_WIDTH * 0.8)
+                    .background(Color.accentColor)
+                    .clipShape(.capsule)
+                    .foregroundColor(.white)
+                    .accessibilityIdentifier("takeQuizButton")
+                }.onAppear {
+                    prepareQuestions(userInfo: userInfo)
+                }.navigationDestination(isPresented: $isShowingQuiz) {
+                    LoveLanguageQuizView(userInfo: userInfo, isShowingQuiz: $isShowingQuiz)
+                }
+            } else {
+                VStack{
+                    HStack {
+                        Text(languages.actsOfService.name).frame(width: 200, alignment: .leading)
+                        LoveLanguageBar(loveLanguage: languages.actsOfService, score: userInfo.QuizScore.actsOfService).frame(width: const.LOVE_LANG_BAR_WIDTH, alignment: .bottomLeading)
                     }
-                }.navigationTitle("Why I Love You")
-                .navigationBarTitleDisplayMode(.inline)
+                    HStack {
+                        Text(languages.physicalTouch.name).frame(width: 200, alignment: .leading)
+                        LoveLanguageBar(loveLanguage: languages.physicalTouch, score: userInfo.QuizScore.physicalTouch).frame(width: const.LOVE_LANG_BAR_WIDTH, alignment: .leading)
+                    }
+                    HStack {
+                        Text(languages.qualityTime.name).frame(width: 200, alignment: .leading)
+                        LoveLanguageBar(loveLanguage: languages.qualityTime, score: userInfo.QuizScore.qualityTime).frame(width: const.LOVE_LANG_BAR_WIDTH, alignment: .leading)
+                    }
+                    HStack {
+                        Text(languages.receivingGifts.name).frame(width: 200, alignment: .leading)
+                        LoveLanguageBar(loveLanguage: languages.receivingGifts, score: userInfo.QuizScore.receivingGifts).frame(width: const.LOVE_LANG_BAR_WIDTH, alignment: .leading)
+                    }
+                    HStack {
+                        Text(languages.wordsOfAffirmation.name).frame(width: 200, alignment: .leading)
+                        LoveLanguageBar(loveLanguage: languages.wordsOfAffirmation, score: userInfo.QuizScore.wordsOfAffirmation).frame(width: const.LOVE_LANG_BAR_WIDTH, alignment: .leading)
+                    }
+                    Text(verbatim: "Based on your test results, your most preferred love language is \(favoriteLanguage?.name ?? "unknown") with a percentage of \(favoritePercentage ?? Float(0))%")
+                    Text("")
+                }.padding().accessibilityIdentifier("languagesChart")
+            }
+        }.onAppear{
+            if let _ = userInfo.QuizScore.favoriteLanguage {
+                let temp = userInfo.QuizScore.fetchFavorite(userInfo: userInfo)
+                favoriteLanguage = temp.favoriteLanguage
+                favoritePercentage = temp.favoritePercentage
+                favoritePercentage = round(favoritePercentage! * 100) / 100
             }
         }
-        
+    }
+}
+
+struct LoveLanguageBar: View {
+    let const = Constants()
+    let loveLanguage: languages
+    let score: Int
+    @State var scorePercentage: CGFloat?
+    
+    var body: some View {
+        ZStack(alignment: .leading) {
+            Capsule().frame(width: const.LOVE_LANG_BAR_WIDTH, height: const.LOVE_LANG_BAR_HEIGHT).foregroundStyle(Color.gray).opacity(0.5)
+            Capsule().frame(width: getScorePercentageCG(score: score, maxCount: loveLanguage.maxCount) * const.LOVE_LANG_BAR_WIDTH, height: const.LOVE_LANG_BAR_HEIGHT).foregroundStyle(loveLanguage.backgroundColor)
+        }.frame(width: const.LOVE_LANG_BAR_WIDTH)
+    }
+}
+
+func getScorePercentageCG(score: Int, maxCount: Int) -> CGFloat {
+    let scoreFloat = Float(score)
+    let maxCountFloat = Float(maxCount)
+    return CGFloat(scoreFloat/maxCountFloat)
+}
+
+func getScorePercentage(score: Int, maxCount: Int) -> Float {
+    let scoreFloat = Float(score)
+    let maxCountFloat = Float(maxCount)
+    return Float(scoreFloat/maxCountFloat)
+}
+
+
+
+struct LoveLanguage {
+    var name: String
+    var color: Color
+}
+
+struct SettingsView: View {
+    @State private var showAlert = false
+    var body: some View {
+        VStack {
+            Section {
+                List {
+                    Button("Reset Love Language Score", action: {
+                        Constants().USER_DEFAULTS.removeObject(forKey: "usersLoveLanguages")
+                        showAlert.toggle()
+                    })
+                }
+            }
+        }.alert(isPresented: $showAlert) {
+            Alert(title: Text("Success!"), message: Text("Your quiz scores have been erased"))
+        }
     }
 }
 

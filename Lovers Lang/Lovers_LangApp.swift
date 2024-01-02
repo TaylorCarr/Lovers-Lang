@@ -29,3 +29,12 @@ struct Lovers_LangApp: App {
         .modelContainer(sharedModelContainer)
     }
 }
+
+struct Constants {
+    let USER_DEFAULTS = UserDefaults.standard
+    let SCREEN_WIDTH = UIScreen.main.bounds.width
+    let SCREEN_HEIGHT = UIScreen.main.bounds.height
+    let MAX_INDEX = 29
+    let LOVE_LANG_BAR_WIDTH = CGFloat(100)
+    let LOVE_LANG_BAR_HEIGHT = CGFloat(20)
+}
