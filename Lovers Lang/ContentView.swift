@@ -28,7 +28,7 @@ struct ContentView: View {
                 Image(uiImage: UIImage(named: "AppIcon")!)
                     .resizable()
                     .scaleEffect(half ? 1.5 : 1.0)
-                    .frame(width: 250, height: 250, alignment: .center)
+                    .frame(width: 150, height: 150, alignment: .center)
                 
                     .onAppear(perform: {
                         withAnimation(self.repeatingAnimation) {
@@ -115,7 +115,7 @@ struct LoveLanguageView: View {
                         Text(languages.wordsOfAffirmation.name).frame(width: 200, alignment: .leading)
                         LoveLanguageBar(loveLanguage: languages.wordsOfAffirmation, score: userInfo.QuizScore.wordsOfAffirmation).frame(width: const.LOVE_LANG_BAR_WIDTH, alignment: .leading)
                     }
-                    Text(verbatim: "Based on your test results, your most preferred love language is \(favoriteLanguage?.name ?? "unknown") with a percentage of \(favoritePercentage ?? Float(0))%").frame(width: Constants().SCREEN_WIDTH * 0.8, height: Constants().SCREEN_HEIGHT * 0.2).accessibilityIdentifier("userSummary")
+                    Text(verbatim: "Based on your test results, your most preferred love language is \(userInfo.QuizScore.favoriteLanguage?.name ?? "unknown") with a percentage of \(userInfo.QuizScore.favoritePercentage)%").frame(width: Constants().SCREEN_WIDTH * 0.8, height: Constants().SCREEN_HEIGHT * 0.2).accessibilityIdentifier("userSummary")
                 }.padding().accessibilityIdentifier("languagesChart")
             }
         }.onAppear{

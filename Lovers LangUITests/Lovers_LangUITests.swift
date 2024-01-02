@@ -27,38 +27,42 @@ final class Lovers_LangUITests: XCTestCase {
         app.launchArguments = ["-StartFromCleanState", "YES"]
         app.launch()
         
-        let langChart = app.otherElements["userSummary"]
+//        let langChart = app.otherElements["userSummary"]
+//        let userSummary = app.staticTexts["Based on your test results"]//app.textViews["userSummary"]
 
         if(app.buttons["takeQuizButton"].isHittable) {
             app.buttons["takeQuizButton"].tap()
             for _ in 0..<30 {
-                app.buttons["buttonA"].tap()
+                app.buttons["buttonB"].tap()
                 app.buttons["submit"].tap()
             }
-            XCTAssert(langChart.exists)
+//            XCTAssertTrue(app.textViews["userSummary"].exists)
+            XCTAssert(app.textViews["userSummary"].isHittable)
         } else {
-            XCTAssert(langChart.exists)
+//            XCTAssertTrue(app.textViews["userSummary"].exists)
+//            app.textViews["userSummary"].waitForExistence(timeout: 2.5)
+            XCTAssert(app.textViews["userSummary"].waitForExistence(timeout: 2.5))
         }
     }
 
-    func cleanSlate() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
-        app.launchArguments = ["-StartFromCleanState", "YES"]
-        
-        let langChart = app.otherElements["userSummary"]
-
-        if(app.buttons["takeQuizButton"].isHittable) {
-            app.buttons["takeQuizButton"].tap()
-            for _ in 0..<30 {
-                app.buttons["buttonA"].tap()
-                app.buttons["submit"].tap()
-            }
-        } else {
-            XCTAssert(langChart.exists)
-        }
-    }
+//    func cleanSlate() throws {
+//        // UI tests must launch the application that they test.
+//        let app = XCUIApplication()
+//        app.launch()
+//        app.launchArguments = ["-StartFromCleanState", "YES"]
+//        
+//        let langChart = app.otherElements["userSummary"]
+//
+//        if(app.buttons["takeQuizButton"].isHittable) {
+//            app.buttons["takeQuizButton"].tap()
+//            for _ in 0..<30 {
+//                app.buttons["buttonB"].tap()
+//                app.buttons["submit"].tap()
+//            }
+//        } else {
+//            XCTAssert(langChart.exists)
+//        }
+//    }
 
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {

@@ -23,6 +23,7 @@ struct LoveLanguageQuizView: View {
     @Binding var isShowingQuiz: Bool
     @State var questionNum: Int = 0
     @State var quizIndex: Int = 0
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         NavigationStack {
@@ -60,8 +61,11 @@ struct LoveLanguageQuizView: View {
                     Button("Submit", action: {
                         if(questionNum == Constants().MAX_INDEX) {
                             //calculate final score
+                            print("calculating final score")
                             calcScore(userInfo: userInfo)
                             isShowingQuiz = false
+                            userInfo.QuizScore = userInfo.QuizScore.fetchUserData()!
+                            dismiss()
                         } else if(questionNum == quizIndex) {
                             quizIndex+=1
                             questionNum+=1
@@ -93,18 +97,6 @@ struct QuizAnswer: Equatable {
     var answer: String
     var type: languages
 }
-
-//struct favoriteLanguage {
-//    var language: languages
-//    var score: Int
-//    var percentage: Float
-//    
-//    enum CodingKeys: String, CodingKey {
-//        case language
-//        case score
-//        case percentage
-//    }
-//}
 
 struct QuizScore: Codable {
     var actsOfService = 0
@@ -209,18 +201,7 @@ struct QuizScore: Codable {
         let time = Float(userInfo.QuizScore.qualityTime)
         let touch = Float(userInfo.QuizScore.physicalTouch)
         
-        print(words)
-        print(gifts)
-        print(acts)
-        print(time)
-        print(touch)
-        
         var percentage = words/Float(languages.wordsOfAffirmation.maxCount)
-        print(words/Float(languages.wordsOfAffirmation.maxCount))
-        print(gifts/Float(languages.receivingGifts.maxCount))
-        print(acts/Float(languages.actsOfService.maxCount))
-        print(time/Float(languages.qualityTime.maxCount))
-        print(touch/Float(languages.physicalTouch.maxCount))
         var language = languages.wordsOfAffirmation
         var score = words
         
@@ -248,7 +229,7 @@ struct QuizScore: Codable {
             score = touch
         }
         
-        return favoriteStruct(favoriteLanguage: language, favoriteScore: Int(score), favoritePercentage: percentage)
+        return favoriteStruct(favoriteLanguage: language, favoriteScore: Int(score), favoritePercentage: round(percentage * 100))
     }
 }
 
@@ -418,42 +399,11 @@ func calcScore(userInfo: UserInfo) {
         let type = userInfo.QuizAnswers[i]!.type
         userInfo.QuizScore.addPoint(answerType: type, userInfo: userInfo)
     }
-    userInfo.QuizScore.favoriteLanguage = findMaximum(userInfo: userInfo)
-    userInfo.QuizScore.favoritePercentage = Float(getScorePercentage(score: userInfo.QuizScore.favoriteScore, maxCount: userInfo.QuizScore.favoriteLanguage!.maxCount))
+    let temp = userInfo.QuizScore.fetchFavorite(userInfo: userInfo)
+    userInfo.QuizScore.favoriteLanguage = temp.favoriteLanguage
+    userInfo.QuizScore.favoritePercentage = temp.favoritePercentage
+    userInfo.QuizScore.favoriteScore = temp.favoriteScore
     userInfo.QuizScore.saveUserData(userScore: userInfo.QuizScore)
-}
-
-func findMaximum(userInfo: UserInfo) -> languages {
-    let words = userInfo.QuizScore.wordsOfAffirmation
-    let gifts = userInfo.QuizScore.receivingGifts
-    let acts = userInfo.QuizScore.actsOfService
-    let time = userInfo.QuizScore.qualityTime
-    let touch = userInfo.QuizScore.physicalTouch
-    
-    var temp = words/languages.wordsOfAffirmation.maxCount
-    var type = languages.wordsOfAffirmation
-    
-    if(temp < gifts/languages.wordsOfAffirmation.maxCount) {
-        temp = gifts/languages.wordsOfAffirmation.maxCount
-        type = languages.receivingGifts
-    }
-    
-    if(temp < acts/languages.actsOfService.maxCount) {
-        temp = acts/languages.actsOfService.maxCount
-        type = languages.actsOfService
-    }
-    
-    if(temp < time/languages.qualityTime.maxCount) {
-        temp = time/languages.qualityTime.maxCount
-        type = languages.qualityTime
-    }
-    
-    if(temp < touch/languages.physicalTouch.maxCount) {
-        temp = temp/languages.physicalTouch.maxCount
-        type = languages.physicalTouch
-    }
-    
-    return type
 }
 
 #Preview {
