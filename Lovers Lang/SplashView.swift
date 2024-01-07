@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SplashView: View {
+    @Environment(\.colorScheme) private var screenMode
     @State var half = false
     @State var doneLoading = false
     
@@ -18,24 +19,32 @@ struct SplashView: View {
     }
     
     var body: some View {
-        NavigationView{
-            ZStack {
-                if (doneLoading == false) {
-                    
-                    
-                } else {
-//                    Lovers_LangApp()
-                }
-            }.onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                    withAnimation{
-                        self.doneLoading = true
-                    }
-                }
+        ZStack {
+            Image(uiImage: appropriateImage())
+                .resizable()
+                .scaleEffect(half ? 1.5 : 1.0)
+                .frame(width: 100, height: 100, alignment: .center)
+        }.onAppear(perform: {
+            withAnimation(self.repeatingAnimation) {
+                self.half.toggle()
+                self.doneLoading = false
+                print("added")
             }
+        })
+    }
+    
+    func appropriateImage() -> UIImage {
+        let lightIcon = UIImage(named: "IconLight")
+        let darkIcon = UIImage(named: "IconDark")
+        
+        if (screenMode == .light) {
+            return lightIcon!
+        } else {
+            return darkIcon!
         }
     }
 }
+
 
 #Preview {
     SplashView()

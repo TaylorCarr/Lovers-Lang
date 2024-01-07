@@ -26,9 +26,9 @@ struct LoveLanguageView: View {
                     })
                     .padding()
                     .frame(width: const.SCREEN_WIDTH * 0.8)
-                    .background(Color.accentColor)
+                    .background(Color("Text"))
                     .clipShape(.capsule)
-                    .foregroundColor(.white)
+                    .foregroundColor(Color("Background"))
                     .accessibilityIdentifier("takeQuizButton")
                 }.onAppear {
                     prepareQuestions(userInfo: userInfo)

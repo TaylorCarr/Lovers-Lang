@@ -33,7 +33,7 @@ struct LoveLanguageQuizView: View {
                         questionNum-=1
                     }
                 } label: {
-                    Image("backArrow").disabled(quizIndex == 0)
+                    Image("backArrow").disabled(quizIndex == 0).foregroundStyle(Color("Text"))
                 }
                 VStack {
                     Spacer()
@@ -58,10 +58,9 @@ struct LoveLanguageQuizView: View {
                     .clipShape(.capsule)
                     .opacity(userInfo.QuizAnswers[questionNum] == userInfo.QuizQuestions[questionNum].answerB || userInfo.QuizAnswers[questionNum] == nil ? 1.0 : 0.7)
                     .scaleEffect(userInfo.QuizAnswers[questionNum] == userInfo.QuizQuestions[questionNum].answerA  || userInfo.QuizAnswers[questionNum] == nil ? 0.8 : 1.0)
-                    Button("Submit", action: {
+                    Button(action: {
                         if(questionNum == Constants().MAX_INDEX) {
                             //calculate final score
-                            print("calculating final score")
                             calcScore(userInfo: userInfo)
                             isShowingQuiz = false
                             userInfo.QuizScore = userInfo.QuizScore.fetchUserData()!
@@ -72,8 +71,13 @@ struct LoveLanguageQuizView: View {
                         } else {
                             questionNum+=1
                         }
-                        print(questionNum)
-                    }).disabled(userInfo.QuizAnswers[questionNum] == nil).accessibilityIdentifier("submit")
+                    }, label: {
+                        Text("Submit")
+                    })
+                    .padding()
+                    .foregroundStyle(Color.accentColor)
+                    .disabled(userInfo.QuizAnswers[questionNum] == nil)
+                    .accessibilityIdentifier("submit")
                     Spacer()
                 }
                 Button {
@@ -81,7 +85,7 @@ struct LoveLanguageQuizView: View {
                         questionNum+=1
                     }
                 } label: {
-                    Image("forwardArrow").disabled(questionNum == quizIndex)
+                    Image("forwardArrow").disabled(questionNum == quizIndex).foregroundStyle(Color("Text"))
                 }
             }
         }
