@@ -51,6 +51,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: npm install and build
         run: |
+          cd AWS/src
           npm ci
           npm run build --if-present
         env:
@@ -60,6 +61,7 @@ jobs:
       - name: Deploy to AWS
         id: deploy-to-aws
         run: |
+          cd AWS/src
           npm ci || npm i
           npx @vercel/ncc build ./AWS/src/index.js -m -e @aws-sdk/client-sts
           cd AWS/src && zip -r code.zip .
