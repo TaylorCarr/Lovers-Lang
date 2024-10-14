@@ -29,7 +29,7 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
-          role-to-assume: <arn:aws:iam::841162665967:role/GitHubActionRole> #change to reflect your IAM role’s ARN
+          role-to-assume: arn:aws:iam::841162665967:role/GitHubActionRole #change to reflect your IAM role’s ARN
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.AWS_REGION }}
       # Hello from AWS: WhoAmI
@@ -39,14 +39,14 @@ jobs:
   deploy_lambda:
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [20.x]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - name: npm install and build
@@ -56,13 +56,13 @@ jobs:
         env:
           CI: true
       - name: Create zip for lambda
-        run: cd src && zip -r code.zip .
+        run: cd AWS/src && zip -r code.zip .
       - name: Deploy to AWS
         id: deploy-to-aws
         run: |
           npm ci || npm i
-          npx @vercel/ncc build ./src/index.mjs -m -e @aws-sdk/client-sts
-          cd src && zip -r code.zip .
+          npx @vercel/ncc build ./AWS/src/index.js -m -e @aws-sdk/client-sts
+          cd AWS/src && zip -r code.zip .
           aws lambda update-function-code --function-name createUser --zip-file code.zip
     outputs:
       aws-err: ${{ steps.deploy-to-aws.outputs.error }}
