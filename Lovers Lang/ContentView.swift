@@ -15,6 +15,8 @@ struct ContentView: View {
     let userInfo = UserInfo()
     @State var half = false
     @State var doneLoading = false
+    @State var signedIn: Bool
+    @AppStorage("userId") var userId: String?
     let navBarColor = Color(uiColor: UIColor(red: 230, green: 230, blue: 250, alpha: 0.5))
     
 //    var repeatingAnimation: Animation {
@@ -39,6 +41,16 @@ struct ContentView: View {
                             .tabItem {
                                 Text("Settings")
                                 Image("settings").resizable()
+                            }
+                        Login(signedIn: signedIn)
+                            .tabItem {
+                                Text("Profile")
+                            }.onAppear {
+                                if userId != nil {
+                                    signedIn = true
+                                } else {
+                                    signedIn = false
+                                }
                             }
                     }
                 }
@@ -67,5 +79,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ContentView(signedIn: false)
 }
