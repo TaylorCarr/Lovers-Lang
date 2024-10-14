@@ -10,6 +10,9 @@
 		CE2557182B44A4CE00772ED3 /* LoveLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2557172B44A4CE00772ED3 /* LoveLanguageView.swift */; };
 		CE25571A2B44A51300772ED3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2557192B44A51300772ED3 /* SettingsView.swift */; };
 		CE2D0F2B2AF7B19A0086BE58 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2D0F2A2AF7B19A0086BE58 /* Login.swift */; };
+		CE37132D2CB7D26500A7FDFF /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37132C2CB7D25800A7FDFF /* ProfileView.swift */; };
+		CE37132F2CB7D7A100A7FDFF /* LoveLanguageMiniView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE37132E2CB7D79800A7FDFF /* LoveLanguageMiniView.swift */; };
+		CE3713312CB7D7ED00A7FDFF /* LoveLanguageMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3713302CB7D7E500A7FDFF /* LoveLanguageMatchView.swift */; };
 		CE9518622B3EB3000026D165 /* Lovers_LangTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED93A872AF770F0007B2187 /* Lovers_LangTests.swift */; };
 		CE9518632B3EB30F0026D165 /* Lovers_LangUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED93A912AF770F0007B2187 /* Lovers_LangUITests.swift */; };
 		CE9518642B3EB5340026D165 /* Lovers_LangUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED93A932AF770F0007B2187 /* Lovers_LangUITestsLaunchTests.swift */; };
@@ -44,6 +47,9 @@
 		CE2D0F2A2AF7B19A0086BE58 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		CE3495E72B3EACA70049900B /* Lovers LangUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Lovers LangUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE3495F62B3EACD10049900B /* Lovers LangTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Lovers LangTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE37132C2CB7D25800A7FDFF /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		CE37132E2CB7D79800A7FDFF /* LoveLanguageMiniView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoveLanguageMiniView.swift; sourceTree = "<group>"; };
+		CE3713302CB7D7E500A7FDFF /* LoveLanguageMatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoveLanguageMatchView.swift; sourceTree = "<group>"; };
 		CE9518652B425B8B0026D165 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		CEB6E8D62AFAE60400A905C4 /* LoveLanguageQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoveLanguageQuizView.swift; sourceTree = "<group>"; };
 		CED93A6F2AF770EC007B2187 /* Lovers Lang.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lovers Lang.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -112,6 +118,9 @@
 				CE2557192B44A51300772ED3 /* SettingsView.swift */,
 				CE2557172B44A4CE00772ED3 /* LoveLanguageView.swift */,
 				CE2D0F2A2AF7B19A0086BE58 /* Login.swift */,
+				CE37132C2CB7D25800A7FDFF /* ProfileView.swift */,
+				CE37132E2CB7D79800A7FDFF /* LoveLanguageMiniView.swift */,
+				CE3713302CB7D7E500A7FDFF /* LoveLanguageMatchView.swift */,
 				CED93A782AF770EF007B2187 /* Assets.xcassets */,
 				CED93A7D2AF770EF007B2187 /* Lovers_Lang.entitlements */,
 				CED93A7E2AF770EF007B2187 /* Info.plist */,
@@ -295,11 +304,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE37132D2CB7D26500A7FDFF /* ProfileView.swift in Sources */,
 				CE25571A2B44A51300772ED3 /* SettingsView.swift in Sources */,
 				CED93A752AF770EC007B2187 /* ContentView.swift in Sources */,
 				CED93A732AF770EC007B2187 /* Lovers_LangApp.swift in Sources */,
 				CE2557182B44A4CE00772ED3 /* LoveLanguageView.swift in Sources */,
 				CE9518662B425B8B0026D165 /* SplashView.swift in Sources */,
+				CE3713312CB7D7ED00A7FDFF /* LoveLanguageMatchView.swift in Sources */,
+				CE37132F2CB7D7A100A7FDFF /* LoveLanguageMiniView.swift in Sources */,
 				CE2D0F2B2AF7B19A0086BE58 /* Login.swift in Sources */,
 				CEB6E8D72AFAE60400A905C4 /* LoveLanguageQuizView.swift in Sources */,
 			);

@@ -6,38 +6,46 @@
 //
 
 import SwiftUI
+import AuthenticationServices
 
 struct Login: View {
-    @State var username: String = ""
-    @State var password: String = ""
-    
-    let screenHeight = UIScreen.main.bounds.height
-    let screenWidth = UIScreen.main.bounds.width
-    
+    @Environment(\.colorScheme) var colorScheme
+    @AppStorage("username") var username: String?
+    @AppStorage("userId") var userId: String?
+    @AppStorage("firstName") var firstName: String?
+    @AppStorage("lastName") var lastName: String?
+    @State var signedIn: Bool
     
     var body: some View {
-        VStack{
-            TextField("Username", text: $username)
-            SecureField("Password", text: $password)
-            Button(action: {
-                
-            }, label: {
-                Text("Sign In").background(in: .buttonBorder)
-            })
-            HStack {
-                Button("Create An Account", action: {
-                    
-                })
-                Divider()
+        if signedIn {
+            ProfileView()
+        } else {
+            VStack {
+                SignInWithAppleButton(.signIn) { request in
+                    request.requestedScopes = [.email, .fullName]
+                } onCompletion: { result in
+                    switch result {
+                        case .success(let auth):
+                            switch auth.credential {
+                                case let credentials as ASAuthorizationAppleIDCredential:
+                                    let userId = credentials.user
+                                    username = credentials.email
+                                default:
+                                    print("credentials error")
+                            }
+                        default:
+                            print("sign in failed")
+                    }
+                }.signInWithAppleButtonStyle(colorScheme == .dark ? .white : .black)
+//                SignInWithAppleButton(.signUp, onRequest: <#T##(ASAuthorizationAppleIDRequest) -> Void#>, onCompletion: <#T##((Result<ASAuthorization, any Error>) -> Void)##((Result<ASAuthorization, any Error>) -> Void)##(Result<ASAuthorization, any Error>) -> Void#>)
                 Button("Continue As Guest", action: {
                     
                 })
-            }.frame(width: screenWidth * 0.9, height: screenHeight * 0.1, alignment: .center)
-        }.frame(width: screenWidth * 0.9, alignment: .center)
-        
+            }
+        }
     }
 }
 
 #Preview {
-    Login()
+    Login(signedIn: false)
 }
