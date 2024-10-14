@@ -62,7 +62,7 @@ jobs:
         run: |
           npm ci || npm i
           npx @vercel/ncc build ./src/index.mjs -m -e @aws-sdk/client-sts
-          cd src && zip -r code.zip .
+          cd AWS/src && zip -r code.zip .
           aws lambda update-function-code --function-name createUser --zip-file code.zip
     outputs:
       aws-err: ${{ steps.deploy-to-aws.outputs.error }}
