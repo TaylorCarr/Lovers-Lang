@@ -63,7 +63,7 @@ jobs:
         run: |
           cd AWS/src
           npm ci || npm i
-          npx @vercel/ncc build ./AWS/src/index.js -m -e @aws-sdk/client-sts
+          npx @vercel/ncc build ./index.js -m -e @aws-sdk/client-sts
           cd AWS/src && zip -r code.zip .
           aws lambda update-function-code --function-name createUser --zip-file code.zip
     outputs:
