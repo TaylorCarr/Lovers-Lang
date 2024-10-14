@@ -11,7 +11,7 @@ on:
       - matches
 
 env:
-  AWS_REGION : us-east-1
+  AWS_REGION : us-east-2
   S3_BUCKET: carrcodesbucket
   S3_KEY: 
 
