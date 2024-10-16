@@ -7,7 +7,7 @@ const docClient = DynamoDBDocumentClient.from(client);
 
 export const handler = async (event) => {
   let headers = event.headers
-  let userId = headers["userId"]
+  let userId = headers.userId
   console.log(headers);
 
   if (userId) {
