@@ -7,11 +7,8 @@ const docClient = DynamoDBDocumentClient.from(client);
 
 export const handler = async (event) => {
   console.log(event);
-  let body = JSON.parse(event.body)
-  let message = body.message
-  // headers["3rdHeader"] = "greetings"
-  console.log(message);
-  let userId = message.userId
+  let body = JSON.parse(event.message)
+  let userId = body.userId
   
 
   if (userId) {
