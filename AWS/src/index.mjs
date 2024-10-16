@@ -10,6 +10,7 @@ export const handler = async (event) => {
   let body = JSON.parse(event.body)
   let message = body.message
   // headers["3rdHeader"] = "greetings"
+  console.log(message);
 
   if (message.name && message.email && message.userId && message.score) {
     let name = message.name
