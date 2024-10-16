@@ -9,7 +9,7 @@ export const handler = async (event) => {
   console.log(event);
   let message = event.message;
   let email = message.email;
-  console.log(userId)
+  console.log(email)
 
   if (email) {
     const command = new GetCommand({
