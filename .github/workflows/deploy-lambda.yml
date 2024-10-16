@@ -21,7 +21,7 @@ permissions:
   contents: read    # This is required for actions/checkout
 
 jobs:
-  deploy_lambda:
+  deploy_createUsers_lambda:
     strategy:
       matrix:
         node-version: [20.x]
@@ -63,5 +63,95 @@ jobs:
           npx @vercel/ncc build ./index.mjs -m -e @aws-sdk/client-sts
           zip -r code.zip .
           aws lambda update-function-code --function-name createUser --zip-file fileb://code.zip
+    outputs:
+      aws-err: ${{ steps.deploy-to-aws.outputs.error }}
+
+  deploy_attachUsers_lambda:
+    strategy:
+      matrix:
+        node-version: [20.x]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
+        with:
+          role-to-assume: arn:aws:iam::841162665967:role/GitHubActionRole #change to reflect your IAM role’s ARN
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-region: ${{ env.AWS_REGION }}
+      # Hello from AWS: WhoAmI
+      - name: Sts GetCallerIdentity
+        run: |
+          aws sts get-caller-identity
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install and build
+        run: |
+          cd AWS/src
+          npm ci
+          npm run build --if-present
+        env:
+          CI: true
+      - name: Create zip for lambda
+        run: cd AWS/src/attachUsers && zip -r code.zip .
+      - name: Deploy to AWS
+        id: deploy-to-aws
+        run: |
+          cd AWS/src/attachUsers
+          npm ci || npm i
+          npx @vercel/ncc build ./index.mjs -m -e @aws-sdk/client-sts
+          zip -r code.zip .
+          aws lambda update-function-code --function-name attachUsers --zip-file fileb://code.zip
+    outputs:
+      aws-err: ${{ steps.deploy-to-aws.outputs.error }}
+
+  deploy_getScore_lambda:
+    strategy:
+      matrix:
+        node-version: [20.x]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
+        with:
+          role-to-assume: arn:aws:iam::841162665967:role/GitHubActionRole #change to reflect your IAM role’s ARN
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-region: ${{ env.AWS_REGION }}
+      # Hello from AWS: WhoAmI
+      - name: Sts GetCallerIdentity
+        run: |
+          aws sts get-caller-identity
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install and build
+        run: |
+          cd AWS/src
+          npm ci
+          npm run build --if-present
+        env:
+          CI: true
+      - name: Create zip for lambda
+        run: cd AWS/src/getScore && zip -r code.zip .
+      - name: Deploy to AWS
+        id: deploy-to-aws
+        run: |
+          cd AWS/src/getScore
+          npm ci || npm i
+          npx @vercel/ncc build ./index.mjs -m -e @aws-sdk/client-sts
+          zip -r code.zip .
+          aws lambda update-function-code --function-name getScore --zip-file fileb://code.zip
     outputs:
       aws-err: ${{ steps.deploy-to-aws.outputs.error }}

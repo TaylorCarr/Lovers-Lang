@@ -1,5 +1,5 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, UpdateCommand } from "@aws-sdk/lib-dynamodb";
+import { DynamoDBDocumentClient, GetCommand } from "@aws-sdk/lib-dynamodb";
 
 const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
@@ -16,17 +16,16 @@ export const handler = async (event) => {
     let userId = message.userId
     let partner = message.partner
 
-    const command = new UpdateCommand({
+    const command = new GetCommand({
       TableName: "loversLangUsers",
-      Item: {
-        userId: userId,
-        partnerId: partner
+      Key: {
+        userId: userId
       },
     });
   
     const response = await docClient.send(command);
     console.log(response);
-    return response;
+    return response.score;
   }
 
     // TODO implement
