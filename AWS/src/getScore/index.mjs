@@ -7,14 +7,10 @@ const docClient = DynamoDBDocumentClient.from(client);
 
 export const handler = async (event) => {
   let headers = event.headers
-  let body = JSON.parse(event.body)
-  let message = body.message
-  // headers["3rdHeader"] = "greetings"
-  console.log(message);
+  let userId = headers["userId"]
+  console.log(headers);
 
-  if (message.userId && message.partner) {
-    let userId = message.userId
-    let partner = message.partner
+  if (userId) {
 
     const command = new GetCommand({
       TableName: "loversLangUsers",
