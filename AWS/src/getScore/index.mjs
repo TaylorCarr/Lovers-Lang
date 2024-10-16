@@ -8,14 +8,14 @@ const docClient = DynamoDBDocumentClient.from(client);
 export const handler = async (event) => {
   console.log(event);
   let message = event.message;
-  let userId = message.userId;
+  let email = message.email;
   console.log(userId)
 
-  if (userId) {
+  if (email) {
     const command = new GetCommand({
       TableName: "loversLangUsers",
       Key: {
-        "userId": { S: userId }
+        "username": { S: email }
       },
     });
   
