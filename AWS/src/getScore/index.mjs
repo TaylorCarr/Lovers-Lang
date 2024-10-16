@@ -9,12 +9,13 @@ export const handler = async (event) => {
   console.log(event);
   let message = event.message;
   let userId = message.userId;
+  console.log(userId)
 
   if (userId) {
     const command = new GetCommand({
       TableName: "loversLangUsers",
       Key: {
-        userId: userId
+        "userId": { S: userId }
       },
     });
   
