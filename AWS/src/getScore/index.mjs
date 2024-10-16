@@ -6,7 +6,7 @@ const docClient = DynamoDBDocumentClient.from(client);
 
 
 export const handler = async (event) => {
-  console.log(event);
+  console.log(handler);
   let headers = event.headers
   console.log(headers);
   let userId = headers.userId
