@@ -54,11 +54,11 @@ jobs:
         env:
           CI: true
       - name: Create zip for lambda
-        run: cd AWS/src && zip -r code.zip .
+        run: cd AWS/src/createUser && zip -r code.zip .
       - name: Deploy to AWS
         id: deploy-to-aws
         run: |
-          cd AWS/src
+          cd AWS/src/createUser
           npm ci || npm i
           npx @vercel/ncc build ./index.mjs -m -e @aws-sdk/client-sts
           zip -r code.zip .
