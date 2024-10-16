@@ -21,10 +21,10 @@ export const handler = async (event) => {
     const command = new PutCommand({
       TableName: "loversLangUsers",
       Item: {
-        username: { S: email },
-        userId: { S: userId},
-        name: {S: name},
-        score: {M: score}
+        username: email,
+        userId: userId,
+        name: name ,
+        score: score
       },
     });
   
