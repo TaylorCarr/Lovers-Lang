@@ -1,5 +1,5 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, UpdateCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
+import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
 
 const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
@@ -16,7 +16,7 @@ export const handler = async (event) => {
     let name = message.name
     let email = message.email
     let userId = message.userId
-    let score = JSON.parse(message.score)
+    let score = message.score
 
     const command = new PutCommand({
       TableName: "loversLangUsers",
