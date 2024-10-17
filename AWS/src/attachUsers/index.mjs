@@ -24,7 +24,7 @@ export const handler = async (event) => {
             "userId": userId,
         },
         UpdateExpression:
-            'set #partnerId = :v_partnerId, #partnerUsername = v_partnerUsername',
+            'set #partnerId = :v_partnerId, #partnerUsername = :v_partnerUsername',
         ExpressionAttributeNames: {
             '#partnerId': 'partnerId',
             '#partnerUsername': 'partnerUsername'
