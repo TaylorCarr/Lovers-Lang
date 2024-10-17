@@ -13,15 +13,17 @@ export const handler = async (event) => {
   // headers["3rdHeader"] = "greetings"
   console.log(message);
 
-  if (message.userId && message.partnerId && message.partnerUsername) {
+  if (message.userId && message.partnerId && message.partnerUsername && message.username) {
     let userId = message.userId
     let partnerId = message.partnerId
     let partnerUsername = message.partnerUsername
+    let username = message.username
 
     const command = new UpdateCommand({
         TableName: "loversLangUsers",
         Key: {
             "userId": userId,
+            "username": username
         },
         UpdateExpression:
             'set #partnerId = :v_partnerId, #partnerUsername = :v_partnerUsername',
