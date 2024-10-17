@@ -16,7 +16,7 @@ export const handler = async (event) => {
     const command = new GetCommand({
       TableName: "loversLangUsers",
       Key: {
-        username: email
+        "username": email
       },
     });
   
