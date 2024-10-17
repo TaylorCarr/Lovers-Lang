@@ -26,15 +26,17 @@ export const handler = async (event) => {
   
     const response = await docClient.send(command);
     console.log(response);
-    return response.score;
-  }
-
-    // TODO implement
+    return response.Item;
+  } else {
+    let errorMessage = {
+        message: "User not found"
+    }
     const response = {
-      statusCode: 200,
-      headers: headers,
-      body: JSON.stringify(message),
-    };
-  
-    return response;
-  };
+        statusCode: 404,
+        headers: headers,
+        body: JSON.stringify(errorMessage),
+      };
+
+      return response;
+  }
+};
