@@ -12,16 +12,26 @@ export const handler = async (event) => {
   // headers["3rdHeader"] = "greetings"
   console.log(message);
 
-  if (message.userId && message.partner) {
+  if (message.userId && message.partnerId && message.partnerUsername) {
     let userId = message.userId
-    let partner = message.partner
+    let partnerId = message.partnerId
+    let partnerUsername = message.partnerUsername
 
     const command = new UpdateCommand({
-      TableName: "loversLangUsers",
-      Item: {
-        userId: userId,
-        partnerId: partner
-      },
+        TableName: "loversLangUsers",
+        Key: {
+            "userId": userId,
+        },
+        UpdateExpression:
+            'set #partnerId = :v_partnerId, #partnerUsername = v_partnerUsername',
+        ExpressionAttributeNames: {
+            '#partnerId': 'partnerId',
+            '#partnerUsername': 'partnerUsername'
+        },
+        ExpressionAttributeValues: {
+            ':v_partnerUsername': partnerUsername,
+            ':v_partnerId': partnerId
+        },
     });
   
     const response = await docClient.send(command);
