@@ -11,6 +11,7 @@ class httpHandler {
     var apiUrl: URL
     var const: Constants
     var request: URLRequest
+//    @ObservedObject var userInfo: UserInfo
     
     init () {
         self.const = Constants()
@@ -67,20 +68,15 @@ class httpHandler {
         task.resume()
     }
     
-    func getScore(userId: String, username: String) -> Any {
-        var scoreResponse: [String?: Any?] = [:]
-        var partnerId: String
-        var partnerUsername: String
-        var score: QuizScoreStruct
-        var name: String
+    func getScore(userId: String, username: String) -> [String: Any] {
+        var scoreResponse: [String: Any] = [:]
         let sem = DispatchSemaphore.init(value: 0)
         
         request.httpMethod = "GET"
         request.addValue(userId, forHTTPHeaderField: "X-User-Id")
         request.addValue(username, forHTTPHeaderField: "X-User-Email")
-        print("inside getScore()")
 
-        let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: self.request, completionHandler: { (data, response, error) in
             print("inside url session")
             
             guard let data = data, error == nil else {
@@ -93,35 +89,11 @@ class httpHandler {
                 print("response json below")
                 print(responseJSON)
                 scoreResponse = responseJSON
+                sem.signal()
             }
             
-            
-//            if let jsonResult = try? JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments) {
-//                if let jsonDict = jsonResult as? NSDictionary {
-//                    // retrieve the  from the json data
-//                    imageID = jsonDict["id"] as? Int
-//                    author = jsonDict["author"] as? String
-//                    width = jsonDict["width"] as? Int
-//                    height = jsonDict["height"] as? Int
-//                    imageURL = jsonDict["url"] as? String
-//                    downloadURL = jsonDict["download_url"] as? String
-//                } else { print("Error in DataRetriever.fetchImageInfo(), jsonResult could not be cast to NSDictionary") }
-//            } else { print("Error in DataRetriever.fetchImageInfo(), failed to get json object from data")}
-
-//            do {
-//                print("inside do block")
-//                if JSONSerialization.isValidJSONObject(data) {
-//
-//                    }
-//                } else {
-//                    // not valid - do something appropriate
-//                    print("invalid json object")
-//                }
-//            } catch {
-//                print("json serialization error")
-//                print(error)
-//            }
-        }).resume()
+        })
+        task.resume()
         sem.wait()
         
         return scoreResponse

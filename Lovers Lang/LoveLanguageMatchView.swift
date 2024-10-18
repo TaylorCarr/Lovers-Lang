@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct LoveLanguageMatchView: View {
-    let partnerScore: languages? = nil
+    @State var partnerScore: languages?
+    @AppStorage("partnerId") var partnerId: String?
+    @AppStorage("partnerUsername") var partnerUsername: String?
     
     var body: some View {
         VStack {
@@ -22,6 +24,14 @@ struct LoveLanguageMatchView: View {
         }.onAppear {
             // call http handler to fetch user's partner score
             print("match view onAppear()")
+            
+            if let parnterId = partnerId, let partnerUsername = partnerUsername {
+                let handlerResponse = httpHandler().getScore(userId: partnerId!, username: partnerUsername)
+                if handlerResponse.count > 0 {
+                    let scoreResponse = handlerResponse["score"] as! QuizScoreStruct
+                    self.partnerScore = scoreResponse.favoriteLanguage
+                }
+            }
         }
     }
 }

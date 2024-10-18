@@ -29,9 +29,11 @@ struct Login: View {
                         case .success(let auth):
                             switch auth.credential {
                                 case let credentials as ASAuthorizationAppleIDCredential:
-                                    let userId = credentials.user
+                                    userId = credentials.user
                                     username = credentials.email
-                                    
+                                    firstName = credentials.fullName?.givenName
+                                    lastName = credentials.fullName?.familyName
+                                httpHandler().createUser(userId: userId!, username: username!, firstName: firstName!, lastName: lastName!, userScore: userInfo.QuizScore)
                                 default:
                                     print("credentials error")
                             }
@@ -48,8 +50,10 @@ struct Login: View {
                     signedIn = true
                     
                     let handlerResponse = httpHandler().getScore(userId: userId!, username: username!)
-                    print("handler response below")
-                    print(handlerResponse)
+                    if handlerResponse.count > 0 {
+                        let scoreResponse = handlerResponse["score"] as! QuizScoreStruct
+                        userInfo.QuizScore = scoreResponse
+                    }
                 }).padding()
             }
         }

@@ -10,6 +10,8 @@ import SwiftUI
 
 @main
 struct Lovers_LangApp: App {
+    @AppStorage("userId") var userId: String?
+    @AppStorage("username") var username: String?
 //    var sharedModelContainer: ModelContainer = {
 //        let schema = Schema([])
 //        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
@@ -27,7 +29,7 @@ struct Lovers_LangApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView(signedIn: false)
+            ContentView(signedIn: (userId != nil) ? true : false)
         }
     }
 }
