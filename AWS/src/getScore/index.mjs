@@ -26,7 +26,14 @@ export const handler = async (event) => {
   
     const response = await docClient.send(command);
     console.log(response);
-    return JSON.stringify(response.Item);
+    console.log(response.Item)
+
+    const apiResponse = {
+      statusCode: 200,
+      body: JSON.stringify(response.Item)
+    }
+
+    return apiResponse;
   } else {
     let errorMessage = {
         message: "User not found"
