@@ -34,8 +34,8 @@ struct SplashView: View {
     }
     
     func appropriateImage() -> UIImage {
-        let lightIcon = UIImage(named: "IconLight")
-        let darkIcon = UIImage(named: "IconDark")
+        let lightIcon = UIImage(named: "LightImage")
+        let darkIcon = UIImage(named: "DarkImage")
         
         if (screenMode == .light) {
             return lightIcon!

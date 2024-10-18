@@ -14,11 +14,12 @@ struct Login: View {
     @AppStorage("userId") var userId: String?
     @AppStorage("firstName") var firstName: String?
     @AppStorage("lastName") var lastName: String?
+    @ObservedObject var userInfo: UserInfo
     @State var signedIn: Bool
     
     var body: some View {
         if signedIn {
-            ProfileView()
+            ProfileView(firstName: firstName ?? "Guest", lastName: lastName ?? "User", userInfo: userInfo)
         } else {
             VStack {
                 SignInWithAppleButton(.signIn) { request in
@@ -30,22 +31,24 @@ struct Login: View {
                                 case let credentials as ASAuthorizationAppleIDCredential:
                                     let userId = credentials.user
                                     username = credentials.email
+                                    
                                 default:
                                     print("credentials error")
                             }
                         default:
                             print("sign in failed")
                     }
-                }.signInWithAppleButtonStyle(colorScheme == .dark ? .white : .black)
-//                SignInWithAppleButton(.signUp, onRequest: <#T##(ASAuthorizationAppleIDRequest) -> Void#>, onCompletion: <#T##((Result<ASAuthorization, any Error>) -> Void)##((Result<ASAuthorization, any Error>) -> Void)##(Result<ASAuthorization, any Error>) -> Void#>)
+                }.signInWithAppleButtonStyle(colorScheme == .dark ? .white : .black).frame(width: Constants().SCREEN_WIDTH * 0.9, height: Constants().SCREEN_WIDTH * 0.1).padding()
                 Button("Continue As Guest", action: {
-                    
-                })
+                    username = nil
+                    userId = "guest"
+                    signedIn = true
+                }).padding()
             }
         }
     }
 }
 
 #Preview {
-    Login(signedIn: false)
+    Login(userInfo: UserInfo(), signedIn: false)
 }

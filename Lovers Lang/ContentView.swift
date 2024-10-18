@@ -6,11 +6,11 @@
 //
 
 import SwiftUI
-import SwiftData
+//import SwiftData
 import WebKit
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
+//    @Environment(\.modelContext) private var modelContext
     @Environment(\.colorScheme) private var screenMode
     let userInfo = UserInfo()
     @State var half = false
@@ -42,9 +42,10 @@ struct ContentView: View {
                                 Text("Settings")
                                 Image("settings").resizable()
                             }
-                        Login(signedIn: signedIn)
+                        Login(userInfo: userInfo, signedIn: signedIn)
                             .tabItem {
                                 Text("Profile")
+                                Image("profile").resizable()
                             }.onAppear {
                                 if userId != nil {
                                     signedIn = true

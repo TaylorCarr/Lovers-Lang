@@ -9,11 +9,12 @@ import SwiftUI
 
 class UserInfo: ObservableObject {
     @Published var QuizQuestions: [QuizQuestion] = []
-    @Published var QuizScore: QuizScore
+    @Published var QuizScore: QuizScoreStruct
     @Published var QuizAnswers = [QuizAnswer?](repeating: nil, count: Constants().MAX_INDEX + 1)
     
     init() {
-        self.QuizScore = Lovers_Lang.QuizScore().fetchUserData() ?? Lovers_Lang.QuizScore()
+//        self.QuizScore = Lovers_Lang.QuizScore().fetchUserData() ?? Lovers_Lang.QuizScore()
+        self.QuizScore = QuizScoreStruct().fetchUserData() ?? QuizScoreStruct()
         self.QuizAnswers.reserveCapacity(Constants().MAX_INDEX)
     }
 }
@@ -102,7 +103,7 @@ struct QuizAnswer: Equatable {
     var type: languages
 }
 
-struct QuizScore: Codable {
+struct QuizScoreStruct: Codable {
     var actsOfService = 0
     var receivingGifts = 0
     var qualityTime = 0
@@ -171,7 +172,7 @@ struct QuizScore: Codable {
         }
     }
     
-    func saveUserData(userScore: QuizScore) {
+    func saveUserData(userScore: QuizScoreStruct) {
         print(userScore)
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(userScore) {
@@ -179,11 +180,11 @@ struct QuizScore: Codable {
         }
     }
     
-    func fetchUserData() -> QuizScore? {
+    func fetchUserData() -> QuizScoreStruct? {
         if let data = Constants().USER_DEFAULTS.value(forKey: "usersLoveLanguages") as? Data {
             let decoder = JSONDecoder()
             do {
-                let decoded = try decoder.decode(QuizScore.self, from: data)
+                let decoded = try decoder.decode(QuizScoreStruct.self, from: data)
                 return decoded
             } catch {
                 print(error)
