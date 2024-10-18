@@ -7,9 +7,9 @@ const docClient = DynamoDBDocumentClient.from(client);
 
 export const handler = async (event) => {
   console.log(event);
-  let message = event.message;
-  let email = message.email;
-  let userId = message.userId;
+  console.log(event.headers);
+  let email = event.headers["X-User-Email"];
+  let userId = event.headers["X-User-Id"];
   console.log(email);
   console.log(typeof email);
   console.log(userId);

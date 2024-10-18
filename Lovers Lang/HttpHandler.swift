@@ -77,8 +77,8 @@ class httpHandler {
 //        request.allowsCellularAccess = true
 //        request.addValue(const.API_KEY, forHTTPHeaderField: "x-api-key")
 //        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue(userId, forHTTPHeaderField: "userId")
-        request.addValue(username, forHTTPHeaderField: "email")
+        request.addValue(userId, forHTTPHeaderField: "X-User-Id")
+        request.addValue(username, forHTTPHeaderField: "X-User-Email")
         request.httpBody = jsonData
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
