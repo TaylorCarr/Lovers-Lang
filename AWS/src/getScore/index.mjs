@@ -10,6 +10,12 @@ export const handler = async (event) => {
   console.log(event.headers);
   let email = event.headers["X-User-Email"];
   let userId = event.headers["X-User-Id"];
+  if (email == undefined) {
+    email = event.headers["x-user-email"]
+  }
+  if (userId == undefined) {
+    userId = event.headers["x-user-id"]
+  }
   console.log(email);
   console.log(typeof email);
   console.log(userId);
