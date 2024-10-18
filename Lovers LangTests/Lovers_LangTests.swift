@@ -27,6 +27,7 @@ final class Lovers_LangTests: XCTestCase {
         let handler = httpHandler()
         let response = handler.getScore(userId: "taycarr1234", username: "taycarr@gmail.com")
         
+        print("test response below")
         print(response)
     }
 

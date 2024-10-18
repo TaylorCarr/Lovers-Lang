@@ -40,7 +40,7 @@ export const handler = async (event) => {
     }
     const response = {
         statusCode: 404,
-        headers: headers,
+        // headers: headers,
         body: JSON.stringify(errorMessage),
       };
 

@@ -40,9 +40,16 @@ struct Login: View {
                     }
                 }.signInWithAppleButtonStyle(colorScheme == .dark ? .white : .black).frame(width: Constants().SCREEN_WIDTH * 0.9, height: Constants().SCREEN_WIDTH * 0.1).padding()
                 Button("Continue As Guest", action: {
-                    username = nil
-                    userId = "guest"
+//                    username = nil
+//                    userId = "guest"
+//                    signedIn = true
+                    userId = "taycarr1234"
+                    username = "taycarr@gmail.com"
                     signedIn = true
+                    
+                    let handlerResponse = httpHandler().getScore(userId: userId!, username: username!)
+                    print("handler response below")
+                    print(handlerResponse)
                 }).padding()
             }
         }

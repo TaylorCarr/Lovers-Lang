@@ -28,7 +28,6 @@ struct SplashView: View {
             withAnimation(self.repeatingAnimation) {
                 self.half.toggle()
                 self.doneLoading = false
-                print("added")
             }
         })
     }
