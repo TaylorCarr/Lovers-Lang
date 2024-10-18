@@ -42,18 +42,19 @@ struct Login: View {
                     }
                 }.signInWithAppleButtonStyle(colorScheme == .dark ? .white : .black).frame(width: Constants().SCREEN_WIDTH * 0.9, height: Constants().SCREEN_WIDTH * 0.1).padding()
                 Button("Continue As Guest", action: {
-//                    username = nil
-//                    userId = "guest"
-//                    signedIn = true
-                    userId = "taycarr1234"
-                    username = "taycarr@gmail.com"
+                    username = nil
+                    userId = "guest"
                     signedIn = true
-                    
-                    let handlerResponse = httpHandler().getScore(userId: userId!, username: username!)
-                    if handlerResponse.count > 0 {
-                        let scoreResponse = handlerResponse["score"] as! QuizScoreStruct
-                        userInfo.QuizScore = scoreResponse
-                    }
+//                    userId = "taycarr1234"
+//                    username = "taycarr@gmail.com"
+//                    signedIn = true
+//                    
+//                    let handlerResponse = httpHandler().getScore(userId: userId!, username: username!)
+//                    if handlerResponse.count > 0 {
+//                        
+//                        let scoreResponse = handlerResponse["score"] as! QuizScoreStruct
+//                        userInfo.QuizScore = scoreResponse
+//                    }
                 }).padding()
             }
         }
