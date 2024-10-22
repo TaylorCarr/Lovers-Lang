@@ -21,7 +21,10 @@ permissions:
   contents: read    # This is required for actions/checkout
 
 jobs:
-  AssumeRoleAndCallIdentity:
+  deploy_createUsers_lambda:
+    strategy:
+      matrix:
+        node-version: [20.x]
     runs-on: ubuntu-latest
     steps:
       - name: Git clone the repository
@@ -36,12 +39,6 @@ jobs:
       - name: Sts GetCallerIdentity
         run: |
           aws sts get-caller-identity
-  deploy_lambda:
-    strategy:
-      matrix:
-        node-version: [20.x]
-    runs-on: ubuntu-latest
-    steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -51,50 +48,110 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: npm install and build
         run: |
+          cd AWS/src
           npm ci
           npm run build --if-present
         env:
           CI: true
       - name: Create zip for lambda
-        run: cd AWS/src && zip -r code.zip .
+        run: cd AWS/src/createUser && zip -r code.zip .
       - name: Deploy to AWS
         id: deploy-to-aws
         run: |
+          cd AWS/src/createUser
           npm ci || npm i
-          npx @vercel/ncc build ./AWS/src/index.js -m -e @aws-sdk/client-sts
-          cd AWS/src && zip -r code.zip .
-          aws lambda update-function-code --function-name createUser --zip-file code.zip
+          npx @vercel/ncc build ./index.mjs -m -e @aws-sdk/client-sts
+          zip -r code.zip .
+          aws lambda update-function-code --function-name createUser --zip-file fileb://code.zip
     outputs:
       aws-err: ${{ steps.deploy-to-aws.outputs.error }}
 
-  # update_lambda:
-  #   runs-on: ubuntu-latest
-  #   needs: deploy_lambda
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 0
+  deploy_attachUsers_lambda:
+    strategy:
+      matrix:
+        node-version: [20.x]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
+        with:
+          role-to-assume: arn:aws:iam::841162665967:role/GitHubActionRole #change to reflect your IAM role’s ARN
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-region: ${{ env.AWS_REGION }}
+      # Hello from AWS: WhoAmI
+      - name: Sts GetCallerIdentity
+        run: |
+          aws sts get-caller-identity
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install and build
+        run: |
+          cd AWS/src
+          npm ci
+          npm run build --if-present
+        env:
+          CI: true
+      - name: Create zip for lambda
+        run: cd AWS/src/attachUsers && zip -r code.zip .
+      - name: Deploy to AWS
+        id: deploy-to-aws
+        run: |
+          cd AWS/src/attachUsers
+          npm ci || npm i
+          npx @vercel/ncc build ./index.mjs -m -e @aws-sdk/client-sts
+          zip -r code.zip .
+          aws lambda update-function-code --function-name attachUsers --zip-file fileb://code.zip
+    outputs:
+      aws-err: ${{ steps.deploy-to-aws.outputs.error }}
 
-  #     - name: Configure AWS Credentials
-  #       if: steps.verify-changed-config.outputs.any_changed == 'true'
-  #       uses: aws-actions/configure-aws-credentials@v4
-  #       with:
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
-  #         aws-region: ${{ env.AWS_REGION }}
-  #         mask-aws-account-id: 'no'
-
-  #     - name: Get account info
-  #       if: steps.verify-changed-config.outputs.any_changed == 'true'
-  #       run: |
-  #         echo "ACCOUNT_ID=`echo $(aws sts get-caller-identity | jq -r '.Account')`" >> $GITHUB_ENV
-
-  #     - name: Set role name
-  #       if: steps.verify-changed-config.outputs.any_changed == 'true'
-  #       run: echo "ROLE_NAME=`echo $(jq -r '.Role' lambda.config.json)`" >> $GITHUB_ENV
-
-  #     - name: Update lambda configuration
-  #       if: steps.verify-changed-config.outputs.any_changed == 'true'
-  #       run: |
-  #         jq -r --arg ROLE_ARN "arn:aws:iam::$ACCOUNT_ID:role/$ROLE_NAME" '.Role = $ROLE_ARN' lambda.config.json > lambda.json
-  #         aws lambda update-function-configuration --cli-input-json file://lambda.json
+  deploy_getScore_lambda:
+    strategy:
+      matrix:
+        node-version: [20.x]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
+        with:
+          role-to-assume: arn:aws:iam::841162665967:role/GitHubActionRole #change to reflect your IAM role’s ARN
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-region: ${{ env.AWS_REGION }}
+      # Hello from AWS: WhoAmI
+      - name: Sts GetCallerIdentity
+        run: |
+          aws sts get-caller-identity
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install and build
+        run: |
+          cd AWS/src
+          npm ci
+          npm run build --if-present
+        env:
+          CI: true
+      - name: Create zip for lambda
+        run: cd AWS/src/getScore && zip -r code.zip .
+      - name: Deploy to AWS
+        id: deploy-to-aws
+        run: |
+          cd AWS/src/getScore
+          npm ci || npm i
+          npx @vercel/ncc build ./index.mjs -m -e @aws-sdk/client-sts
+          zip -r code.zip .
+          aws lambda update-function-code --function-name getScore --zip-file fileb://code.zip
+    outputs:
+      aws-err: ${{ steps.deploy-to-aws.outputs.error }}

@@ -16,7 +16,7 @@ struct SettingsView: View {
                 List {
                     Button("Reset Love Language Score", action: {
                         Constants().USER_DEFAULTS.removeObject(forKey: "usersLoveLanguages")
-                        userInfo.QuizScore = QuizScore()
+                        userInfo.QuizScore = QuizScoreStruct()
                         showAlert.toggle()
                     })
                 }
